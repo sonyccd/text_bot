@@ -1,12 +1,17 @@
 #!/bin/bash
-source config.sh
+#load config file with dep array
+source dep_config.sh
+#what os am i
 OS=$(uname -s)
 linux_pm=""
 echo OS: $OS
+#if a mac
 if [ "$OS" = "Darwin" ]
 then
+    #do we have brew
     if [ -z "$(command -v brew)" ]
     then
+        #do we have curl
         if [ -z "$(command -v curl)" ]
         then
             echo ERROR:
@@ -14,6 +19,7 @@ then
             echo you need to get curl
             exit 1
         fi
+        #do we have ruby
         if [ -z "$(command -v ruby)" ]
         then
             echo ERROR:
@@ -22,6 +28,7 @@ then
             exit 2
         fi
         echo Installing brew
+        #install brew
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         if [ $? -gt 0 ]
         then
@@ -31,8 +38,10 @@ then
             exit 3
         fi
     fi  
+#if i am linux
 elif [ "$OS" = "Linux" ]
 then
+    #am i using apt-get or yum
     if [ -n "$(command -v apt-get)" ]
     then
         linux_pm="apt-get"
@@ -51,6 +60,7 @@ else
     exit 7
 fi
 echo Installing deps
+#loop over deps and install based on os type and package manager
 for i in "${dep[@]}";do
     if [ -n "$(command -v $i)" ]
     then
