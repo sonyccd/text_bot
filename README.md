@@ -15,3 +15,6 @@ The server used is textbelt.com.  It does not allow more than 75 tranmits a day 
 
 ###dep_installer.sh
 This is a script I created to make sure that you have all needed dependencies to run text_bot. It will run on mac or linux.  If dependencies are missing it will use the package manager of your machine to install them.
+
+###Disclaimer
+I am not libale for any uses of this code.  Use at your own risk to loss of friends and family.
