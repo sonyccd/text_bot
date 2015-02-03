@@ -7,7 +7,7 @@ This is text_bot.  It is a bash script with tor that will send the time and date
 To run use
 
 ```
-./textbox.sh <phone #> <# of transmits> <# of times a minute>
+./textbot.sh <phone #> <# of transmits> <# of times a minute>
 ```
 
 ###Notes
