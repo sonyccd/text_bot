@@ -1,7 +1,7 @@
 # text_bot
 
 ##Introduction
-This is text_bot.  It is a bash script with tor that will send the time and date (unless you change the message) to the phone number of your choice over and over again.
+This is text_bot.  It is a bash script with tor that will send the time and date (unless you change the message) to the phone number of your choice over and over again.  And no they can't see who sent it.
 
 ##How to use
 To run use
