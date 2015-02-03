@@ -28,10 +28,21 @@ echo "=========================="
 echo "Phone Number:" $1
 echo "Number of pings:" $2
 echo "Send every "$3" min(s)"
+if [ -z "$4" ]
+then
+    echo "Using default message"
+else
+    echo "Using user message"
+fi
 echo "=========================="
 for((i=0;i<$2;i++))do
-    msg=$(date)
-    msg="The time and date is $msg"
+    if [ -n "$4" ]
+    then
+        msg=$4
+    else
+        msg=$(date)
+        msg="The time and date is $msg"
+    fi
     echo "Message:" $msg
     ret=$(torsocks curl http://textbelt.com/text -d number=$1 -d message="$msg"|jsawk 'return this.success')
     if [ "$ret" = "false" ]; then
