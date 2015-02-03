@@ -1,5 +1,4 @@
 #!/bin/bash
-OS=$(uname -s)
 dep[0]=curl
 dep[1]=wget
 dep[2]=tor
