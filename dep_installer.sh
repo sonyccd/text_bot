@@ -37,6 +37,9 @@ then
             echo Find a nerd to fix this
             exit 3
         fi
+    else
+        echo Updating Brew
+        brew update
     fi  
 #if i am linux
 elif [ "$OS" = "Linux" ]
@@ -45,9 +48,13 @@ then
     if [ -n "$(command -v apt-get)" ]
     then
         linux_pm="apt-get"
+        echo Updating apt-get
+        apt-get update
     elif [ -n "$(command -v yum)" ]
     then
         linux_pm="yum"
+        echo Updating yum
+        yum update
     else
         echo ERROR:
         echo Do you even dev?!

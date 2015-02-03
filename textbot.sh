@@ -5,6 +5,25 @@ if [ -z $1 ] || [ -z $2 ] || [ -z $3 ];then
     echo number of texts, and min apart
     exit 4
 fi
+if [ -n $5 ]
+then
+    echo There is only four options
+    exit 7
+fi
+reg='^[0-9]+([.][0-9]+)?$'
+p_num=${1//[!0-9]/}
+pings=$2
+if ! [[ $pings =~ $reg ]]
+then
+    echo Number of messages must be a non negative number
+    exit 5
+fi
+rate=$3
+if ! [[ $rate =~ $reg ]]
+then
+    echo Rate of message must be non negative number
+    exit 6
+fi
 #runs the dep install
 bash dep_installer.sh
 if [ $? -gt 0 ];then
@@ -18,7 +37,7 @@ if [ $? -ne 0 ]; then
     exit 2
 fi
 #makes sure the user is not trying to send to many requests
-if [ $2 -gt 75 ]; then
+if [ $pings -gt 75 ]; then
     echo "Can not send more than 75 messages"
     echo "at one time or with the same IP"
     echo "address. Change IP to send another round."
@@ -34,9 +53,9 @@ sleep 10
 clear
 #let the user know whats going on
 echo "=========================="
-echo "Phone Number:" $1
-echo "Number of pings:" $2
-echo "Send every "$3" min(s)"
+echo "Phone Number:" $p_num
+echo "Number of pings:" $pings
+echo "Send every "$rate" min(s)"
 #detemrin if usign default or user message
 if [ -z "$4" ]
 then
@@ -46,7 +65,7 @@ else
 fi
 echo "=========================="
 #main loop
-for((i=0;i<$2;i++))do
+for((i=0;i<$pings;i++))do
     #config message
     if [ -n "$4" ]
     then
@@ -57,7 +76,7 @@ for((i=0;i<$2;i++))do
     fi
     echo "Message:" $msg
     #make request to text belt
-    ret=$(torsocks curl http://textbelt.com/text -d number=$1 -d message="$msg"|jsawk 'return this.success')
+    ret=$(torsocks curl http://textbelt.com/text -d number=$p_num -d message="$msg"|jsawk 'return this.success')
     #check to see if text belt worked
     if [ "$ret" = "false" ]; then
         echo "ERROR: Did not send text"
@@ -65,7 +84,7 @@ for((i=0;i<$2;i++))do
     fi
     #wait to run again, give user loading bar
     for j in {1..60};do
-        sleep $3
+        sleep $rate
         printf "#"
     done
     printf "\n"
